@@ -1,4 +1,6 @@
-const getSender = (loggedUser, chatUsers) => {
+export const getSender = (loggedUser, chatUsers) => {
     return (chatUsers[0]._id === loggedUser._id) ? chatUsers[1].name : chatUsers[0].name;
 }
-export default getSender;
+export const getSenderFull = (loggedUser, chatUsers) => {
+    return (chatUsers[0]._id === loggedUser._id) ? chatUsers[1] : chatUsers[0];
+}

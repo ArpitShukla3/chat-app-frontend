@@ -9,3 +9,7 @@ export const searchUser = `${Frontendserver}/api/user`;
 // chat APIs 
 export const createChat = `${Frontendserver}/api/chat`;
 export const fetchChats = `${Frontendserver}/api/chat/`
+export const createGroupChat = `${Frontendserver}/api/chat/group`
+export const removeGroupUser = `${Frontendserver}/api/chat/groupRemove`
+export const updateGroupName = `${Frontendserver}/api/chat/rename`
+export const addUsersInGroup = `${Frontendserver}/api/chat/groupAdd`

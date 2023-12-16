@@ -5,11 +5,12 @@ import { fetchChats } from '../../../apiList';
 import axios from 'axios';
 import { AddIcon } from '@chakra-ui/icons';
 import ChatLoading from './ChatLoading';
-import getSender from "../../Config/ChatLogic.js"
+import { getSender } from "../../Config/ChatLogic.js"
 import GroupChatModal from './GroupChatModal.jsx';
-const MyChats = () => {
+const MyChats = ({ fetchAgain, setFetchAgain }) => {
   let stockSelectedChatId = "";
   const [loggedUser, setLoggedUser] = useState();
+
   const toast = useToast();
   const { selectedChat, setSelectedChat, user, setUser, notification, setNotification, chats, setChats, } = ChatState();
   async function loadChats() {
@@ -24,7 +25,7 @@ const MyChats = () => {
   useEffect(() => {
     setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
     loadChats();
-  }, [])
+  }, [fetchAgain])
   return (
     <Box
       display={{ base: selectedChat ? "none" : "flex", md: "flex" }}

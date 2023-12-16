@@ -14,7 +14,7 @@ function ProfileModel({ user, children }) {
                         fontFamily={"Work sans"}
                         display={"flex"}
                         justifyContent={"center"}
-                    >{user.name}</ModalHeader>
+                    >{user.name.toUpperCase()}</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody
                         display={"flex"}

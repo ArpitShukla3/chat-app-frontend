@@ -6,7 +6,7 @@ import ChatPage from './Pages/ChatPage';
 function App() {
   return (
     <div className='app'>
-      <CustomRoutes/>
+      <CustomRoutes />
     </div>
   )
 }
