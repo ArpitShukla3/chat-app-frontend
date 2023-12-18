@@ -13,3 +13,8 @@ export const createGroupChat = `${Frontendserver}/api/chat/group`
 export const removeGroupUser = `${Frontendserver}/api/chat/groupRemove`
 export const updateGroupName = `${Frontendserver}/api/chat/rename`
 export const addUsersInGroup = `${Frontendserver}/api/chat/groupAdd`
+
+
+// message APIs
+export const sendMessageAPI = `${Frontendserver}/api/message`;
+export const fetchAllChats = `${Frontendserver}/api/message`;

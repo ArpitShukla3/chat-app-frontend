@@ -22,7 +22,7 @@ import UserBadgeItem from "../Avatar/UserBadgeItem";
 import UserListItem from "../Avatar/UserListItem";
 import { addUsersInGroup, removeGroupUser, searchUser, updateGroupName } from "../../../apiList";
 import axios from "axios";
-function UpdateGroupModel({ fetchAgain, setFetchAgain, name }) {
+function UpdateGroupModel({ fetchAgain, setFetchAgain, name, fetchAllMessages }) {
     const { user, selectedChat, setSelectedChat } = ChatState();
     const [groupChatName, setGroupChatName] = useState(selectedChat.chatName);
     const [search, setSearch] = useState("");
@@ -89,6 +89,7 @@ function UpdateGroupModel({ fetchAgain, setFetchAgain, name }) {
                 userId: userToRemove._id
             }, config);
             (userToRemove._id === user) ? setSelectedChat() : setSelectedChat(data);
+            fetchAllMessages();
             setFetchAgain(!fetchAgain);
             setloading(false)
         } catch (error) {
