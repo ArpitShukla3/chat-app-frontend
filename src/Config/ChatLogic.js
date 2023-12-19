@@ -30,8 +30,11 @@ export const isSameSenderMargin = (messages, m, i, userId) => {
 };
 export const getMeMarginBottom = (messages, i, m, userId) => {
     //is sender is user
-    if (isUser(messages, i, m, userId)) {
-
+    if (i < messages.length - 1 && messages[i].sender._id !== messages[i + 1].sender._id) {
+        return "10px"
+    }
+    else {
+        return "2px"
     }
 }
 export const getMeMarginLeft = (messages, i, m, userId) => {

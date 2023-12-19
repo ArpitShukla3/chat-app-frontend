@@ -12,8 +12,9 @@ import axios from 'axios';
 import { createChat, searchUser } from '../../../apiList';
 import ChatLoading from './ChatLoading';
 import UserListItem from '../Avatar/UserListItem';
+import { getSender } from '../../Config/ChatLogic';
 const SideDrawer = () => {
-    const { selectedChat, setSelectedChat, chats, setChats } = ChatState();
+    const { selectedChat, setSelectedChat, chats, setChats, notification, setNotification, } = ChatState();
     const [search, setSearch] = useState();
     const [searchResult, setSearchResult] = useState();
     const [loading, setloading] = useState(false);
@@ -112,11 +113,27 @@ const SideDrawer = () => {
                     chat App
                 </Text>
                 <div>
-                    <Menu>
-                        <MenuButton padding={"1"}>
-                            <FontAwesomeIcon icon={faBell} style={{ color: "#1a1c1e", }} fontSize="2xl" />
-                        </MenuButton>
-                    </Menu>
+                    {!(notification.length == 0) &&
+                        <Menu>
+                            <MenuButton padding={"1"}>
+
+                                <FontAwesomeIcon icon={faBell} style={{ color: "#1a1c1e", }} fontSize="2xl" />
+
+                            </MenuButton>
+                            <MenuList pl={2}>
+                                {notification.map((notif) => (
+                                    <MenuItem key={notif._id} height={"20px"}
+                                        onClick={() => {
+                                            setSelectedChat(notif.chat);
+                                            setNotification(notification.filter((n) => n !== notif))
+                                        }}
+                                    >
+                                        {notif.chat.isGroupChat ? `message form ${notif.chat.chatName}` : `message from ${getSender(user, notif.chat.users)}`}
+                                    </MenuItem>
+                                ))}
+                            </MenuList>
+                        </Menu>
+                    }
                     <Menu>
                         <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
                             <Avatar size={"sm"} cursor={"pointer"} name={user.name} src={user.pic} />

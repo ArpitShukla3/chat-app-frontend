@@ -18,3 +18,7 @@ export const addUsersInGroup = `${Frontendserver}/api/chat/groupAdd`
 // message APIs
 export const sendMessageAPI = `${Frontendserver}/api/message`;
 export const fetchAllChats = `${Frontendserver}/api/message`;
+
+
+// socket connection
+export const END_POINT = "http://localhost:5000";
