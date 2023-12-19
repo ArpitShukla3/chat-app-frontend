@@ -9,11 +9,15 @@ import axios from "axios";
 import { fetchAllChats, sendMessageAPI } from "../../../apiList";
 import './style.css'
 import ScrollableChat from "./ScrollableChat";
+import io from "socket.io-client"
+const END_POINT = "http://localhost:5000";
+var socket, selectedChatCompare;
 function SingleChat({ fetchAgain, setFetchAgain }) {
     const { user, selectedChat, setSelectedChat } = ChatState();
     const [loading, setLoading] = useState(false);
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState();
+    const [socketConnected, setSocketConnected] = useState(false);
     const toast = useToast();
     const fetchAllMessages = async () => {
         if (!selectedChat) return;
@@ -27,10 +31,11 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
             const { data } = await axios.get(`${fetchAllChats}/${selectedChat._id}`, config);
             setLoading(false)
             setMessages(data.messages);
+            socket.emit("join chat", selectedChat._id);
         } catch (error) {
             toast({
                 title: 'Error',
-                description: "Failed to load messages",
+                description: "Failed to load messages ",
                 status: 'error',
                 duration: 1000,
                 position: "top",
@@ -69,6 +74,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
                 chatId: selectedChat._id
             }, config);
             // setLoading(false)
+            socket.emit("new message", data)
             setMessages([...messages, data])
 
         } catch (error) {
@@ -88,7 +94,33 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
         setNewMessage(e.target.value);
         // typing indicator logic 
     }
-    useEffect(() => { fetchAllMessages(); }, [selectedChat])
+    useEffect(() => {
+        fetchAllMessages();
+        selectedChatCompare = selectedChat;
+    }, [selectedChat])
+    useEffect(() => {
+        socket = io("http://localhost:5000");
+        socket.emit("setup", user);
+        socket.on("connection", () => setSocketConnected(true));
+        socket.on("connected", () => {
+            setSocketConnected(true);
+        })
+
+        socket.on("join chat", (room) => {
+            socket.join(room);
+            console.log("User joined Room: ", room);
+        });
+        socket.on("message recieved", (newMessageRecieved) => {
+            if (
+                !selectedChatCompare || // if chat is not selected or doesn't match current chat
+                selectedChatCompare._id !== newMessageRecieved.chat._id
+            ) { }
+            else {
+                // console.log(newMessageRecieved.content);
+                setMessages([...messages, newMessageRecieved]);
+            }
+        });
+    })
     return (
         <>
             {
