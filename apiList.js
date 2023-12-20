@@ -1,5 +1,5 @@
 // const Frontendserver = `http://localhost:5000`
-const Frontendserver = `https://chat-app-backend-ecru.vercel.app/`
+const Frontendserver = `https://server-snowy-nine.vercel.app`
 
 //user APIs
 export const registrationApi = `${Frontendserver}/api/user/register`;
