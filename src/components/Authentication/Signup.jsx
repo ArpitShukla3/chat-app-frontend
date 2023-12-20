@@ -21,7 +21,7 @@ function Signup() {
   const handleClickShowCnf = () => {
     setShowCnfPassword(!showCnfPassword)
   }
-  const postDetails = (pics) => {
+  const postDetails = async (pics) => {
     setloading(true);
     if (pics === undefined) {
       toast({
@@ -34,7 +34,6 @@ function Signup() {
     }
     const data = new FormData()
     if (pics.type === "image/jpeg" || pics.type === "image/png") {
-
       data.append("file", pics);
       data.append("upload_preset", "chat-app");
       data.append("cloud_name", "dksi17o87");
@@ -44,6 +43,7 @@ function Signup() {
         title: 'Account created.',
         description: "We've created your account for you.",
         status: 'error',
+        position: "top",
         duration: 9000,
         isClosable: true,
       })
@@ -51,24 +51,21 @@ function Signup() {
     }
 
     var FETCH_URL = "https://api.cloudinary.com/v1_1/" + "dksi17o87" + "/" + "/upload";
-    fetch(FETCH_URL, {
-      method: "post",
-      mode: "no-cors",
-      body: data
-    }).then((res) => res.json())
-      .then((data) => {
-        setPic(data.url.toString());
-        setloading(false);
-      }).catch((err) => {
-        toast({
-          title: 'Error',
-          description: err.message,
-          status: 'error',
-          duration: 1000,
-          isClosable: true,
-        })
-        setloading(false);
+    await axios.post(FETCH_URL, data).then(res => {
+      const val = res.data["secure_url"]
+      setPic(val);
+      setloading(false);
+      console.log(val);
+    }).catch((err) => {
+      toast({
+        title: 'Error',
+        description: err.message,
+        status: 'error',
+        duration: 1000,
+        isClosable: true,
       })
+      setloading(false);
+    })
   }
   const submitHandler = async () => {
     setloading(true);
@@ -100,7 +97,8 @@ function Signup() {
           'Content-type': "application/json"
         },
       };
-      const { data } = await axios.post(registrationApi, { name, email, password }, config);
+      // console.log("reaching here")
+      const { data } = await axios.post(registrationApi, { name, email, password, pic }, config);
       toast({
         title: 'Done',
         description: "Account Created successfully",
