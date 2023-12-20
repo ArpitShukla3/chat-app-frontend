@@ -1,4 +1,4 @@
-const Frontendserver = `https://server-snowy-nine.vercel.app`
+const Frontendserver = `https://chat-app-backend-byarpit.onrender.com`
 
 //user APIs
 export const registrationApi = `${Frontendserver}/api/user/register`;
