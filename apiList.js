@@ -1,5 +1,5 @@
 // const Frontendserver = `http://localhost:5000`
-const Frontendserver = `https://chat-app-backend-byarpit.onrender.com/`
+const Frontendserver = `https://chat-app-backend-byarpit.onrender.com`
 
 //user APIs
 export const registrationApi = `${Frontendserver}/api/user/register`;
