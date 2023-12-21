@@ -97,7 +97,6 @@ function Signup() {
           'Content-type': "application/json"
         },
       };
-      // console.log("reaching here")
       const { data } = await axios.post(registrationApi, { name, email, password, pic }, config);
       toast({
         title: 'Done',
@@ -106,14 +105,13 @@ function Signup() {
         duration: 9000,
         isClosable: true,
       })
-      // localStorage.setItem("userInfo", JSON.stringify(data));
+      localStorage.setItem("userInfo", JSON.stringify(data));
       setloading(false);
-      navigateTo("/");
-
+      navigateTo("/chats");
     } catch (error) {
       toast({
         title: 'error',
-        description: error.response.data.message,
+        description: error.message,
         status: 'error',
         duration: 9000,
         isClosable: true,
