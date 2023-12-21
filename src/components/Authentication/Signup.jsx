@@ -106,9 +106,9 @@ function Signup() {
         duration: 9000,
         isClosable: true,
       })
-      localStorage.setItem("userInfo", JSON.stringify(data));
+      // localStorage.setItem("userInfo", JSON.stringify(data));
       setloading(false);
-      navigateTo("/chats");
+      navigateTo("/");
 
     } catch (error) {
       toast({
